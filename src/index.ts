@@ -53,8 +53,8 @@ export function createSignature(
     }
 ) {
     const decoder = new Decoder(assertionResponse.signature).derDecoder(0x30)
-    const r = decoder.readDer(0x02)
-    const s = decoder.readDer(0x02)
+    const r = fixPoint(decoder.readDer(0x02))
+    const s = fixPoint(decoder.readDer(0x02))
 
     const authenticatorData = Bytes.from(assertionResponse.authenticatorData)
     const clientDataJSON = Bytes.from(assertionResponse.clientDataJSON)
@@ -122,4 +122,19 @@ function getECPoint(credentialPublicKey: Map<number, any>) {
 function decodeBinaryJson(data: ArrayBuffer) {
     const decoder = new TextDecoder()
     return JSON.parse(decoder.decode(data))
+}
+
+// chrome sometimes returns curve points that are not 32 bytes, so we need to make sure they are
+function fixPoint(x: Uint8Array) {
+    if (x.length === 32) {
+        return x
+    }
+    const rv = new Uint8Array(32)
+    rv.fill(0)
+    let si = 0
+    while (x[si] === 0 && si < x.length - 1) {
+        si++
+    }
+    rv.set(x.slice(si), 32 - x.length + si)
+    return rv
 }

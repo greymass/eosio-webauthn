@@ -54,4 +54,28 @@ suite('index', function () {
             'SIG_WA_PAmH7fjMVadx19QK8jQooKFsL8szj81CFMPAfAuZ9GkSPQczccCEVCuMKAFS9YP7CvkmzXYULYxvdBMx3Chi9Ld2tPkvtbC6TEYY3QS7fDmZLBQjPCatUncLQneG97KMPCohZzuUyTzr1ojbufyBJ65BNRrYSVQynzcJoVXuym8DLhm5HZf23UdKmb79rGCYkwP4xWeEgowarGmnnxvMsjfRxTrQHeh67TMKiVkz8r8unHh7Zkf5jTPVsKXjSTjEYuwj4aBWpSEXkVvYcWZ3wbSKs9gHjKjY8m22Qeye45D1NQe7vKR'
         )
     })
+
+    test('createSignature (chrome)', function () {
+        const response = {
+            authenticatorData: Bytes.from(
+                'ff7acd7d1bf23a2faae6ac29a0ad894cf65587fb8d20959496c0800788e0f83f0100000011'
+            ).array.buffer,
+            signature: Bytes.from(
+                '30450220466669c1e5fe77663a886f10d373c624d067f3f74f03842b81b8506b3e703af7022100ea0069e93571392507a8e5fb682929afde03482cb034b3b2141dd90eb23298e1'
+            ).array.buffer,
+            clientDataJSON: Bytes.from(
+                '7b2274797065223a22776562617574686e2e676574222c226368616c6c656e6765223a22776b3067644b7464316b693834385a314965736472556951366a7a6c755658595438653557494b73597951222c226f726967696e223a2268747470733a2f2f313038612d382d33372d34332d3139352e6e67726f6b2e696f222c2263726f73734f726967696e223a66616c73652c226f746865725f6b6579735f63616e5f62655f61646465645f68657265223a22646f206e6f7420636f6d7061726520636c69656e74446174614a534f4e20616761696e737420612074656d706c6174652e205365652068747470733a2f2f676f6f2e676c2e716a7a397a6b2f796162506578227d'
+            ).array.buffer,
+        }
+        const sig = lib.createSignature(
+            PublicKey.from(
+                'PUB_WA_4b5bGn5QobA585zgvjXbcXDbufsTpRVipnuaYwszHdKRLS2g74KFbkjDfL4wg2ZR8eGYUd66zXjzT7vEFV7apGp'
+            ),
+            response
+        )
+        assert.equal(
+            sig.toString(),
+            'SIG_WA_2qJAY76sbx2NhQ8obMsemfruwTNXcy16dy1W9tt9iKyWi3UgfNTmkYAdmz6V552PD8K3pJ35w6VSfnAmhCim6CqQCTs4rJsJnVRnGcXJ2HvacRpd59Qp8yHZwgtC2uDFELyAAj2f2jnPQoEmC8NWaDdDzvBc59pzELuBLrv4Yant5szZBhK3fcpRJzohcFusKfiQQcWSLVtWs4h6FVvBe4zd2UPPqwq4tsEHVP4dcsxu7XLwQeiQyUfBKjBWV1wunwPeoyHMZCd2B3esUjMDvGiwaiP6TA7PvuEFZEw4UtAKKhLbNFYfAZxhxZrcB31w3K8JSK5iwAReLStjyiZVgvrLPDUEuvwdrKVTT5PcVfcTg9G9jPB5pRYjhF4CmdQZ82VZ8KzUpUJsqKshXL1GAKJXZAuQ8QwDgzninoJV5SeTGQyide4euR43RHTCvUyeKcRDSV3VGSfaSyRaZoBb8WkcuXvYAArcBC1CCBmeyZTT5Xo4o1vuEnFbFwY'
+        )
+    })
 })
