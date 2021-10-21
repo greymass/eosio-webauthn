@@ -1,7 +1,7 @@
 {
     "name": "@greymass/webauthn",
     "description": "WebAuthn helpers for eosio core",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "homepage": "https://github.com/greymass/eosio-webauthn",
     "license": "BSD-3-Clause",
     "main": "lib/eosio-webauthn.js",
