@@ -1,4 +1,12 @@
-import {ABIEncoder, Bytes, Checksum256, KeyType, PublicKey, Signature} from '@greymass/eosio'
+import {
+    ABIDecoder,
+    ABIEncoder,
+    Bytes,
+    Checksum256,
+    KeyType,
+    PublicKey,
+    Signature,
+} from '@greymass/eosio'
 import {decode as cborDecode} from 'cborg'
 import {ec} from 'elliptic'
 
@@ -76,6 +84,66 @@ export function createSignature(
     clientDataJSON.toABI(encoder)
 
     return new Signature(KeyType.WA, encoder.getBytes())
+}
+
+export function recoverPublic(signature: Signature, message: Bytes): PublicKey {
+    const signatureData = signature.data.array
+    const messageDigest = Checksum256.hash(message).array
+
+    const recid = signatureData[0] - 31
+    const r = signatureData.subarray(1, 33)
+    const s = signatureData.subarray(33, 33 + 32)
+    const curve = new ec('p256')
+    const point = curve.recoverPubKey(messageDigest, {r, s}, recid)
+    const compressedKeyPoint = new Uint8Array(point.encodeCompressed())
+
+    const extraDataView = signatureData.subarray(65)
+    const extraDataDecoder = new ABIDecoder(extraDataView)
+
+    const authenticatorDataBytes = Bytes.fromABI(extraDataDecoder)
+    const clientDataJSONBytes = Bytes.fromABI(extraDataDecoder)
+
+    const clientData = decodeBinaryJson(clientDataJSONBytes.array.slice().buffer)
+    const origin = clientData.origin
+    if (typeof origin !== 'string') {
+        throw new Error('Missing origin in client data during recovery')
+    }
+    const originUrl = new URL(origin)
+    if (originUrl.protocol !== 'https:') {
+        throw new Error('WebAuthn keys require https')
+    }
+
+    const authDataForFlagsDecoder = new Decoder(authenticatorDataBytes.array)
+    if (!authDataForFlagsDecoder.canRead(32 + 1)) {
+        throw new Error('Authenticator data is too short to read flags.')
+    }
+    authDataForFlagsDecoder.readArray(32)
+    const flags = authDataForFlagsDecoder.readByte()
+
+    const abiEncoder = new ABIEncoder()
+    abiEncoder.writeArray(compressedKeyPoint)
+
+    if (flags & 0x01 /* user present */) {
+        abiEncoder.writeByte(0x01)
+    } else if (flags & 0x04 /* user verified */) {
+        abiEncoder.writeByte(0x02)
+    } else {
+        abiEncoder.writeByte(0x00)
+    }
+    abiEncoder.writeString(originUrl.hostname)
+
+    return new PublicKey(KeyType.WA, abiEncoder.getBytes())
+}
+
+export function verifyPublic(signature: Signature, message: Bytes, publicKey: PublicKey) {
+    const signatureData = signature.data.array
+    const messageDigest = Checksum256.hash(message).array
+    const publicKeyData = publicKey.getCompressedKeyBytes()
+
+    const curve = new ec('p256')
+    const r = signatureData.subarray(1, 33)
+    const s = signatureData.subarray(33, 33 + 32)
+    return curve.verify(messageDigest, {r, s}, publicKeyData as any)
 }
 
 function decodeAuthData(authData: Uint8Array) {
