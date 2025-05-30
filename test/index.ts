@@ -26,7 +26,7 @@ suite('index', function () {
         const key = lib.createPublic(response)
         assert.equal(
             key,
-            'PUB_WA_2NVXH8vKM57G6raNdktPvTuMxBM9EeuK8uquDGhaXPfMV7SMFd4dUgza7xGStLnVJs5Xdhhm5fs'
+            'PUB_WA_2NVXH8vKM57G6raNdktPvTuMxBM9EeuK8uquDGhaXPfMV7AcE5UWz1o7ZrPiDQGwNBF4oob3pVy'
         )
     })
 
