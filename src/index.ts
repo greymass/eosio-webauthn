@@ -6,7 +6,7 @@ import {
     KeyType,
     PublicKey,
     Signature,
-} from '@greymass/eosio'
+} from '@wharfkit/antelope'
 import {decode as cborDecode} from 'cborg'
 import {ec} from 'elliptic'
 

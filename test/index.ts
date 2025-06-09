@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {Bytes, PublicKey} from '@greymass/eosio'
+import {Bytes, PublicKey} from '@wharfkit/antelope'
 
 import * as lib from '$lib'
 

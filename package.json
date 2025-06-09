@@ -1,6 +1,6 @@
 {
     "name": "@greymass/webauthn",
-    "description": "WebAuthn helpers for eosio core",
+    "description": "WebAuthn helpers for antelope core",
     "version": "1.0.2",
     "homepage": "https://github.com/greymass/eosio-webauthn",
     "license": "BSD-3-Clause",
@@ -16,7 +16,7 @@
         "prepare": "make"
     },
     "dependencies": {
-        "@greymass/eosio": "^0.5.0",
+        "@wharfkit/antelope": "^1.1.0-rc1",
         "cborg": "^1.5.0",
         "elliptic": "^6.5.4",
         "tslib": "^2.1.0"
