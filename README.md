@@ -1,6 +1,6 @@
 # eosio-webauthn
 
-Helpers for creating WebAuthn PublicKeys and Signatures using [@greymass/eosio](https://github.com/greymass/eosio-core).
+Helpers for creating WebAuthn PublicKeys and Signatures using [@wharfkit/antelope](https://github.com/wharfkit/antelope).
 
 ## Installation
 
@@ -31,7 +31,7 @@ const credentials = await navigator.credentials.create({
             // will be displayed when the user asks to sing
             displayName: 'Team Greymass @ Jungle 3 TestNet',
         },
-        // don't change this, eosio will only work with -7 == EC2
+        // don't change this, antelope will only work with -7 == EC2
         pubKeyCredParams: [{
             type: 'public-key',
             alg: -7,
@@ -47,9 +47,9 @@ const credentials = await navigator.credentials.create({
 const publicKey = createPublic(credentials.response)
 // make sure to persist credentials.id somewhere or you will not be able to sign again with this key!
 
-// ... create or update an existing eosio account to use the new key as a key auth ...
+// ... create or update an existing antelope account to use the new key as a key auth ...
 
-// ... create a transaction using @greymass/eosio ...
+// ... create a transaction using @wharfkit/antelope...
 
 const transactionDigest = transaction.signingDigest(myChainId)
 

@@ -228,17 +228,6 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@greymass/eosio@^0.5.0":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.5.2.tgz#b7fa20937e6378277534e97b828ea871f1804953"
-  integrity sha512-3qMnm4o3B5GZ0cXK/AaKYyDkFLISHSkO3G0hPtn9aYdzNKuefyacyKWKQjQKC4kKLsNoJQd7d1ldAkV8Z0+0gA==
-  dependencies:
-    bn.js "^4.11.9"
-    brorand "^1.1.0"
-    elliptic "^6.5.4"
-    hash.js "^1.0.0"
-    tslib "^2.0.3"
-
 "@humanwhocodes/config-array@^0.6.0":
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.6.0.tgz#b5621fdb3b32309d2d16575456cbc277fa8f021a"
@@ -496,6 +485,18 @@
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@ungap/promise-all-settled/-/promise-all-settled-1.1.2.tgz#aa58042711d6e3275dd37dc597e5d31e8c290a44"
   integrity sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==
+
+"@wharfkit/antelope@^1.1.0-rc1":
+  version "1.1.0-rc1"
+  resolved "https://registry.yarnpkg.com/@wharfkit/antelope/-/antelope-1.1.0-rc1.tgz#ea630ccc6755751562fbec3b8d51c8d35ec337c0"
+  integrity sha512-ffqeqjeLUfJhZs+Xf6JI4uYcpltVrZzVpC4RAwC9ZncHpo4jrm2e7BcQP7AFiSe/PeRJMrcOpogmcILDE/ksLg==
+  dependencies:
+    bn.js "^4.11.9"
+    brorand "^1.1.0"
+    elliptic "^6.5.4"
+    hash.js "^1.0.0"
+    pako "^2.1.0"
+    tslib "^2.0.3"
 
 acorn-jsx@^5.3.1:
   version "5.3.2"
@@ -1987,6 +1988,11 @@ package-hash@^4.0.0:
     hasha "^5.0.0"
     lodash.flattendeep "^4.4.0"
     release-zalgo "^1.0.0"
+
+pako@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/pako/-/pako-2.1.0.tgz#266cc37f98c7d883545d11335c00fbd4062c9a86"
+  integrity sha512-w+eufiZ1WuJYgPXbV/PO3NCMEc3xqylkKHzp8bxp1uW4qaSNQUkwmLLEc3kKsfz8lpV1F8Ht3U1Cm+9Srog2ug==
 
 parent-module@^1.0.0:
   version "1.0.1"
